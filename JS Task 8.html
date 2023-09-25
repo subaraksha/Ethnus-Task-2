@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javascript Task 8</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(#ECECEC, #F7F7F7);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .registration-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(#eae0a0, #ff409f);
+            text-align: center;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .registration-title {
+            font-size: 24px;
+            color: #0077cc;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+
+        .form-group label {
+            flex: 1;
+            margin-right: 10px;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="password"],
+        .form-group input[type="number"],
+        .form-group select,
+        .form-group textarea {
+            flex: 2;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form-group input[type="radio"] {
+            margin-right: 5px;
+        }
+
+        .form-group select {
+            background-color: #fff;
+        }
+
+        .registration-form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #0077cc;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .registration-form button:hover {
+            background-color: #005faa;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="registration-container">
+        <h1 class="registration-title">Registration Form</h1>
+        <form class="registration-form" action="" method="post" onsubmit="return validateForm()">
+            <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" name="firstName" placeholder="First Name" required>
+                <p class="error-message" id="firstNameError"></p>
+            </div>
+
+            <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName" name="lastName" placeholder="Last Name" required>
+                <p class="error-message" id="lastNameError"></p>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Email" required>
+                <p class="error-message" id="emailError"></p>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Password" required>
+                <p class="error-message" id="passwordError"></p>
+            </div>
+
+            <div class="form-group">
+                <label for="reEnterPassword">Re-enter Password</label>
+                <input type="password" id="reEnterPassword" name="reEnterPassword" placeholder="Re-enter Password"
+                    required>
+                <p class="error-message" id="reEnterPasswordError"></p>
+            </div>
+
+            <div class="form-group">
+                <label for="age">Age</label>
+                <input type="number" id="age" name="age" placeholder="Age" required>
+                <p class="error-message" id="ageError"></p>
+            </div>
+
+            <div class="form-group">
+                <label for="address">Address</label>
+                <input type="text" id="address" name="address" placeholder="Address" required>
+                <p class="error-message" id="addressError"></p>
+            </div>
+
+            <div class="form-group">
+                <label for="state">State</label>
+                <input type="text" id="state" name="state" placeholder="State" required>
+                <p class="error-message" id="stateError"></p>
+            </div>
+
+            <div class="form-group">
+                <label for="country">Country</label>
+                <select id="country" name="country" required>
+                    <option value="" disabled>Select Country</option>
+                    <option value="India">India</option>
+                    <option value="USA">USA</option>
+                    <option value="Japan">Japan</option>
+                    <option value="UK">UK</option>
+                    <option value="UAE">UAE</option>
+                </select>
+                <p class="error-message" id="countryError"></p>
+            </div>
+
+            <div class="form-group">
+                <label>Languages Known</label>
+                <input type="radio" id="english" name="languages" value="English" required>
+                <label for="english">English</label>
+                <input type="radio" id="kannada" name="languages" value="Kannada" required>
+                <label for="kannada">Kannada</label>
+                <input type="radio" id="hindi" name="languages" value="Hindi" required>
+                <label for="hindi">Hindi</label>
+                <input type="radio" id="telugu" name="languages" value="Telugu" required>
+                <label for="telugu">Telugu</label>
+                <p class="error-message" id="languagesError"></p>
+            </div>
+
+            <div class="form-group">
+                <label for="declaration">Declaration</label>
+                <input type="checkbox" id="declaration" name="declaration" required>
+                <label for="declaration">I hereby declare that all the given details are true.</label>
+                <p class="error-message" id="declarationError"></p>
+            </div>
+
+            <button type="submit">Log in to Ethnus Website</button>
+        </form>
+    </div>
+
+    <script>
+        function validateForm() {
+            const firstNameInput = document.getElementById("firstName");
+            const lastNameInput = document.getElementById("lastName");
+            const emailInput = document.getElementById("email");
+            const passwordInput = document.getElementById("password");
+            const reEnterPasswordInput = document.getElementById("reEnterPassword");
+            const ageInput = document.getElementById("age");
+            const addressInput = document.getElementById("address");
+            const stateInput = document.getElementById("state");
+            const countrySelect = document.getElementById("country");
+            const languagesInputs = document.querySelectorAll('input[name="languages"]');
+            const declarationCheckbox = document.getElementById("declaration");
+
+            const firstNameError = document.getElementById("firstNameError");
+            const lastNameError = document.getElementById("lastNameError");
+            const emailError = document.getElementById("emailError");
+            const passwordError = document.getElementById("passwordError");
+            const reEnterPasswordError = document.getElementById("reEnterPasswordError");
+            const ageError = document.getElementById("ageError");
+            const addressError = document.getElementById("addressError");
+            const stateError = document.getElementById("stateError");
+            const countryError = document.getElementById("countryError");
+            const languagesError = document.getElementById("languagesError");
+            const declarationError = document.getElementById("declarationError");
+
+            let isValid = true;
+            if (firstNameInput.value === "") {
+                firstNameError.textContent = "Please enter your First Name.";
+                isValid = false;
+            } else {
+                firstNameError.textContent = "";
+            }
+
+            if (lastNameInput.value === "") {
+                lastNameError.textContent = "Please enter your Last Name.";
+                isValid = false;
+            } else {
+                lastNameError.textContent = "";
+            }
+
+            if (emailInput.value === "") {
+                emailError.textContent = "Please enter your Email.";
+                isValid = false;
+            } else {
+                emailError.textContent = "";
+            }
+
+            if (passwordInput.value === "") {
+                passwordError.textContent = "Please enter a Password.";
+                isValid = false;
+            } else {
+                passwordError.textContent = "";
+            }
+
+            if (reEnterPasswordInput.value === "") {
+                reEnterPasswordError.textContent = "Please re-enter your Password.";
+                isValid = false;
+            } else if (reEnterPasswordInput.value !== passwordInput.value) {
+                reEnterPasswordError.textContent = "Passwords do not match.";
+                isValid = false;
+            } else {
+                reEnterPasswordError.textContent = "";
+            }
+
+            if (ageInput.value === "") {
+                ageError.textContent = "Please enter your Age.";
+                isValid = false;
+            } else {
+                ageError.textContent = "";
+            }
+
+            if (addressInput.value === "") {
+                addressError.textContent = "Please enter your Address.";
+                isValid = false;
+            } else {
+                addressError.textContent = "";
+            }
+
+            if (stateInput.value === "") {
+                stateError.textContent = "Please enter your State.";
+                isValid = false;
+            } else {
+                stateError.textContent = "";
+            }
+
+            if (countrySelect.value === "") {
+                countryError.textContent = "Please select your Country.";
+                isValid = false;
+            } else {
+                countryError.textContent = "";
+            }
+            let isLanguageSelected = false;
+            languagesInputs.forEach(input => {
+                if (input.checked) {
+                    isLanguageSelected = true;
+                }
+            });
+
+            if (!isLanguageSelected) {
+                languagesError.textContent = "Please select at least one Language Known.";
+                isValid = false;
+            } else {
+                languagesError.textContent = "";
+            }
+            if (!declarationCheckbox.checked) {
+                declarationError.textContent = "You must accept the declaration.";
+                isValid = false;
+            } else {
+                declarationError.textContent = "";
+            }
+            return isValid;
+        }
+    </script>
+</body>
+
+</html>
